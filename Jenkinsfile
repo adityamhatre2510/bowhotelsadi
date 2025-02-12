@@ -1,4 +1,5 @@
-pipeline {
+pipeline 
+{
 agent any
 stages {
 stage('Build') {
@@ -16,6 +17,8 @@ withAWS(region:'us-east-1',credentials:'jenkinsadi') {
 sh 'echo "Uploading content with AWS creds"'
 s3Upload(pathStyleAccessEnabled: true, payloadSigningEnabled: true, file:'index.html',
 bucket:'adijenkinss3')
+}
+}
 }
 }
 }
