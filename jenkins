@@ -1,29 +1,23 @@
 pipeline {
-    agent any
-    stages {
-        stage('Build') {
-            steps {
-                sh 'echo "Hello World"'
-                sh '''
-                echo "Multiline shell steps work too"
-                ls -lah
-                '''
-                // Ensure index.html exists
-                sh 'echo "<h1>Hello from Jenkins</h1>" > index.html'
-            }
-        }
-        stage('Upload to AWS') {
-            steps {
-                withAWS(region: 'us-east-1', credentials: 'jenkinsadi') {
-                    sh 'echo "Uploading content with AWS creds"'
-                    s3Upload(
-                        pathStyleAccessEnabled: true, 
-                        payloadSigningEnabled: true, 
-                        file: 'index.html', 
-                        bucket: 'adijenkinss3'
-                    )
-                }
-            }
-        }
-    }
+agent any
+stages {
+stage('Build') {
+steps {
+sh 'echo "Hello World"'
+sh '''
+echo "Multiline shell steps works too"
+ls -lah
+'''
+}
+}
+stage('Upload to AWS') {
+steps {
+withAWS(region:'us-east-1',credentials:'jenkinsadi') {
+sh 'echo "Uploading content with AWS creds"'
+s3Upload(pathStyleAccessEnabled: true, payloadSigningEnabled: true, file:'index.html',
+bucket:'adijenkinss3')
+}
+}
+}
+}
 }
