@@ -22,4 +22,3 @@ bucket:'adijenkinss3')
 }
 }
 }
-}
